@@ -5,6 +5,9 @@ pipeline {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "M2_HOME"
     }
+    parameters {
+        string(name: 'jobAndBranchName', defaultValue: 'Multiple Branch Pipeline/qa-1', description: 'Enter the input branch name')
+    }
     environment {
         PATH = "C:\\Windows\\System32"
         JAVA_HOME = "C:\\Program Files\\Java\\jdk-21"
@@ -17,10 +20,16 @@ pipeline {
                 git 'https://github.com/Shiva1100/RestAssuredOne.git'
   script {
                     def jobName = env.JOB_NAME
+                      def name = jobName.replaceAll(' ','_')
+                    def branchName = name.takeAfterLast('/')
+                    def jobAndBranchFormatedName = ${name}_${branchName}
+                    
                     
                     echo "Job Name: ${jobName}"
                     def branchName = env.BRANCH_NAME
                     echo "branch Name: ${branchName}"
+      echo "branch Name: ${jobAndBranchFormatedName}"
+      
      }
                 
             }
