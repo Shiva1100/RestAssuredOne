@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+
+    environment {
+        PATH = "C:\\Windows\\System32"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+              
+                checkout scm
+            }
+        }
+        stage('Build') {
+            steps {
+               bat 'mvn clean package -Dmaven.compiler.source=8 -Dmaven.compiler.target=8 -Dmaven.test.failure.ignore=true'
+              
+            }
+        }
+        stage('Test') {
+            steps {
+                  bat 'mvn test'
+             
+            }
+        }
+    }
+    post {
+        success{
+            echo "Ran successsfully"
+            emailext body: 'Build was Successful. No action Needed', subject: 'Reg Build confirmation from Jenkins', to: 'shiva5092031@gmail.com'
+        }
+        
+    }
+}
