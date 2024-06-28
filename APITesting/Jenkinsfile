@@ -21,8 +21,8 @@ pipeline {
   script {
                     def jobName = env.JOB_NAME
                       def name = jobName.replaceAll(' ','_')
-                    def branchName = name.takeAfterLast('/')
-                    def jobAndBranchFormatedName = ${name}_${branchName}
+                    def branchNameNew = name.takeAfterLast('/')
+                    def jobAndBranchFormatedName = ${name}_${branchNameNew}
                     
                     
                     echo "Job Name: ${jobName}"
