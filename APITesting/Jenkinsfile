@@ -15,7 +15,13 @@ pipeline {
             steps {
                 // Get some code from a GitHub repository
                 git 'https://github.com/Shiva1100/RestAssuredOne.git'
-
+                  script {
+                    def jobName = env.JOB_NAME
+                    
+                    echo "Job Name: ${jobName}"
+                    def branchName = env.BRANCH_NAME
+                    echo "branch Name: ${branchName}"
+     }
                 
             }
 
