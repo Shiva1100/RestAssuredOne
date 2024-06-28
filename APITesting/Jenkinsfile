@@ -45,8 +45,8 @@ pipeline {
               
                 success{
                         echo "Ran successsfully"
-                        emailext body: 'Build was Successful. No action Needed', subject: 'Reg Build confirmation from Jenkins', to: 'shiva5092031@gmail.com'
-                         archiveArtifacts 'target/*.jar'
+                        emailext body: 'Build was Successful. No action Needed', subject: 'Reg Build confirmation from Jenkins', to: 'shiva509203@gmail.com'
+                         archiveArtifacts 'APITesting/target/*.jar'
                 }
             }
 }
