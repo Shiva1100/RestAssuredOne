@@ -1,35 +1,52 @@
 pipeline {
     agent any
 
+    tools {
+        // Install the Maven version configured as "M3" and add it to the path.
+        maven "M2_HOME"
+    }
     environment {
         PATH = "C:\\Windows\\System32"
+        JAVA_HOME = "C:\\Program Files\\Java\\jdk-21"
     }
 
     stages {
         stage('Checkout') {
             steps {
-              
-                checkout scm
+                // Get some code from a GitHub repository
+                git 'https://github.com/Shiva1100/RestAssuredOne.git'
+
+                
             }
+
+          
         }
-        stage('Build') {
+         stage('Build') {
             steps {
-               bat 'mvn clean package -Dmaven.compiler.source=8 -Dmaven.compiler.target=8 -Dmaven.test.failure.ignore=true'
-              
+                // Get some code from a GitHub repository
+                dir('C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Multiple_Branch_Pipeline_master\\APITesting') {
+                bat 'mvn clean package -Dmaven.compiler.source=8 -Dmaven.compiler.target=8 -Dmaven.test.failure.ignore=true'
+                }
+                
             }
+
+          
         }
-        stage('Test') {
+           stage('Test') {
             steps {
-                  bat 'mvn test'
+                  dir('C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Multiple_Branch_Pipeline_master\\APITesting') {
+                bat 'mvn test'
+                }
              
             }
         }
     }
-    post {
-        success{
-            echo "Ran successsfully"
-            emailext body: 'Build was Successful. No action Needed', subject: 'Reg Build confirmation from Jenkins', to: 'shiva5092031@gmail.com'
-        }
-        
-    }
+      post {
+              
+                success{
+                        echo "Ran successsfully"
+                        emailext body: 'Build was Successful. No action Needed', subject: 'Reg Build confirmation from Jenkins', to: 'shiva5092031@gmail.com'
+                         archiveArtifacts 'target/*.jar'
+                }
+            }
 }
